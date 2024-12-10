@@ -11,46 +11,40 @@ namespace WPFTestProject
             InitializeComponent();
             LoadEnvironmentList();
             // Preload data into the DataGrid for the first environment.
-            LoadEnvironmentData("A");
+            LoadEnvironmentData("Environment A");
         }
 
         private void LoadEnvironmentList()
         {
-            var environments = new List<EnvironmentItem>
+            var environments = new List<string>
             {
-                new EnvironmentItem { Name = "Environment A", Tag = "A" },
-                new EnvironmentItem { Name = "Environment B", Tag = "B" }
+                "Environment A",
+                "Environment B"
             };
             EnvironmentListView.ItemsSource = environments;
         }
 
         private void EnvironmentListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (EnvironmentListView.SelectedItem is EnvironmentItem selectedEnvironment)
+            if (EnvironmentListView.SelectedItem is string selectedEnvironment)
             {
-                LoadEnvironmentData(selectedEnvironment.Tag);
+                LoadEnvironmentData(selectedEnvironment);
             }
         }
 
-        private void LoadEnvironmentData(string environment)
+        private void LoadEnvironmentData(string environmentName)
         {
             var data = new List<MachineData>();
-            if (environment == "A")
+            if (environmentName == "Environment A")
             {
                 data.Add(new MachineData { Id = "A1", Status = "Healthy" });
             }
-            else if (environment == "B")
+            else if (environmentName == "Environment B")
             {
                 data.Add(new MachineData { Id = "B1", Status = "Faulted" });
             }
 
             DetailsDataGrid.ItemsSource = data;
-        }
-
-        public class EnvironmentItem
-        {
-            public string Name { get; set; }
-            public string Tag { get; set; }
         }
 
         public class MachineData
