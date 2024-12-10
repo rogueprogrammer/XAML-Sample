@@ -9,16 +9,26 @@ namespace WPFTestProject
         public MainWindow()
         {
             InitializeComponent();
+            LoadEnvironmentList();
             // Preload data into the DataGrid for the first environment.
             LoadEnvironmentData("A");
         }
 
-        private void EnvironmentListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void LoadEnvironmentList()
         {
-            if (EnvironmentListBox.SelectedItem is ListBoxItem selectedItem)
+            var environments = new List<EnvironmentItem>
             {
-                string environment = selectedItem.Tag.ToString();
-                LoadEnvironmentData(environment);
+                new EnvironmentItem { Name = "Environment A", Tag = "A" },
+                new EnvironmentItem { Name = "Environment B", Tag = "B" }
+            };
+            EnvironmentListView.ItemsSource = environments;
+        }
+
+        private void EnvironmentListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (EnvironmentListView.SelectedItem is EnvironmentItem selectedEnvironment)
+            {
+                LoadEnvironmentData(selectedEnvironment.Tag);
             }
         }
 
@@ -35,6 +45,12 @@ namespace WPFTestProject
             }
 
             DetailsDataGrid.ItemsSource = data;
+        }
+
+        public class EnvironmentItem
+        {
+            public string Name { get; set; }
+            public string Tag { get; set; }
         }
 
         public class MachineData
