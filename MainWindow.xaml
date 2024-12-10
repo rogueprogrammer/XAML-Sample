@@ -15,11 +15,13 @@
         <!-- Left Panel -->
         <StackPanel Grid.Column="0" Margin="10">
             <TextBlock Text="Environments" FontWeight="Bold" Margin="5"/>
-            <ListBox x:Name="EnvironmentListBox" SelectionChanged="EnvironmentListBox_SelectionChanged">
-                <ListBoxItem Content="Environment A" Tag="A" />
-                <ListBoxItem Content="Environment B" Tag="B" />
-            </ListBox>
-            
+            <ListView x:Name="EnvironmentListView" SelectionChanged="EnvironmentListView_SelectionChanged" Margin="5">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Environment Name" DisplayMemberBinding="{Binding Name}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
         </StackPanel>
 
         <!-- Grid Splitter -->
